@@ -1,20 +1,31 @@
 import React from 'react'
-import Head from 'next/head'
-
-import RocketseatLogo from '../assets/rocketseat.svg'
-
+import dynamic from 'next/dynamic'
 import { Container } from '../styles/pages/Home'
+
+const GameContextProvider = dynamic(() => import('../context/GameContext'), {
+  ssr: false
+})
+
+const Stage = dynamic(() => import('../components/Stage'), {
+  ssr: false
+})
+const Background = dynamic(() => import('../components/Background'), {
+  ssr: false
+})
+
+const HomeView = dynamic(() => import('../Views/Home'), {
+  ssr: false
+})
 
 const Home: React.FC = () => {
   return (
     <Container>
-      <Head>
-        <title>Homepage</title>
-      </Head>
-
-      <RocketseatLogo />
-      <h1>ReactJS Structure</h1>
-      <p>A ReactJS + Next.js structure made by Rocketseat.</p>
+      <GameContextProvider>
+        <Stage>
+          <Background />
+        </Stage>
+        <HomeView />
+      </GameContextProvider>
     </Container>
   )
 }
